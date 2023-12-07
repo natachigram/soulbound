@@ -1,66 +1,70 @@
-## Foundry
+Certainly! Below is a sample README file for your `Soul` contract. Please customize it further based on additional details or context specific to your project.
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+---
 
-Foundry consists of:
+# Soul Token Smart Contract
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Overview
 
-## Documentation
+The Soul Token smart contract is an ERC-1155 token contract designed to represent a game scenario where each wallet can own a unique, soulbound main token. Additionally, users can mint and transact item tokens that are associated with the soulbound main token. This contract is suitable for scenarios such as a game where the main token represents a character and item tokens represent accessories or items related to the character.
 
-https://book.getfoundry.sh/
+## Functionality
+
+### 1. Mint Soulbound Main Token
+
+- **Function:** `mintSoulboundToken`
+- **Description:** Allows the owner to mint a soulbound main token and assign it to a specific address.
+- **Usage:** This function is typically called by the contract owner to distribute soulbound main tokens to different wallets.
+
+### 2. Mint Item Token
+
+- **Function:** `mintItemToken`
+- **Description:** Allows the owner of the soulbound main token to mint item tokens associated with their main token.
+- **Usage:** Users can call this function to create item tokens that are linked to their soulbound main token.
+
+### 3. Transfer Item Token
+
+- **Function:** `transferItemToken`
+- **Description:** Enables the owner of the soulbound main token to transfer item tokens to other addresses that also own the soulbound main token.
+- **Usage:** Users can transfer item tokens to other wallets possessing the soulbound main token.
+
+### 4. Burn Soulbound Main Token
+
+- **Function:** `burnSoulboundToken`
+- **Description:** Allows the owner of the soulbound main token to burn (destroy) a specific amount of their own main tokens.
+- **Usage:** Users can use this function to reduce the quantity of their soulbound main tokens.
+
+### 5. Restrictions on Main Token Transfer
+
+- **Function:** `_beforeTokenTransfer`
+- **Description:** Ensures that the soulbound main token cannot be transferred to another wallet, only burned by the owner.
+- **Usage:** This internal hook is automatically called before any token transfer.
+
+## Deployment
+
+1. **Deploy on a Testnet (e.g., Sepolia):**
+   - Deploy the `Soul` contract on the desired testnet or Ethereum network.
+   - Provide the initial owner's address as a constructor parameter.
 
 ## Usage
 
-### Build
+1. **Mint Soulbound Main Token:**
 
-```shell
-$ forge build
-```
+   - Call `mintSoulboundToken` to mint a soulbound main token for a specific address.
 
-### Test
+2. **Mint Item Token:**
 
-```shell
-$ forge test
-```
+   - Call `mintItemToken` to mint item tokens associated with the soulbound main token.
 
-### Format
+3. **Transfer Item Token:**
 
-```shell
-$ forge fmt
-```
+   - Call `transferItemToken` to transfer item tokens to other wallets with the soulbound main token.
 
-### Gas Snapshots
+4. **Burn Soulbound Main Token:**
+   - Call `burnSoulboundToken` to burn a specified amount of the owner's soulbound main tokens.
 
-```shell
-$ forge snapshot
-```
+## Custom Errors
 
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+- `OnlySoulboundTokenOwner`: Returned when a function is called by an address that does not own the soulbound main token.
+- `WalletAlreadyOwnsSoulboundToken`: Returned when attempting to mint a soulbound main token for an address that already owns one.
+- `CannotTransferSoulboundToken`: Returned when attempting to transfer the soulbound main token; it can only be burned.
