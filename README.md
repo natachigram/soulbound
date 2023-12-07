@@ -1,7 +1,3 @@
-Certainly! Below is a sample README file for your `Soul` contract. Please customize it further based on additional details or context specific to your project.
-
----
-
 # Soul Token Smart Contract
 
 ## Overview
